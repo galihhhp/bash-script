@@ -1,0 +1,4 @@
+username,password,group
+john_doe,securepassword123,admin
+jane_smith,password456,user
+michael_brown,pass789,moderator
