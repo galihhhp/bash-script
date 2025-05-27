@@ -4,8 +4,13 @@ resource "google_compute_instance" "bookly" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-12"
+      image = var.image_name
     }
+  }
+
+  attached_disk {
+    source      = google_compute_disk.bookly_disk.id
+    device_name = google_compute_disk.bookly_disk.name
   }
 
   network_interface {
@@ -13,6 +18,10 @@ resource "google_compute_instance" "bookly" {
     subnetwork = google_compute_subnetwork.bookly_subnet.id
 
     access_config {}
+  }
+
+  lifecycle {
+    ignore_changes = [attached_disk]
   }
 
   tags = ["bookly-vm"]
@@ -45,4 +54,12 @@ resource "google_compute_firewall" "default" {
 
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["bookly-vm"]
+}
+
+resource "google_compute_disk" "bookly_disk" {
+  name  = var.disk_name
+  size  = var.disk_size
+  zone  = "${var.region}-a"
+  type  = var.disk_type
+  image = var.image_name
 }

@@ -29,3 +29,20 @@ variable "project_id" {
 variable "firewall_name" {
   description = "The name of the firewall rule to create"
 }
+
+variable "disk_name" {
+  description = "The name of the persistent disk to create"
+}
+
+variable "disk_size" {
+  description = "The size of the persistent disk in GB"
+  type        = number
+}
+
+variable "disk_type" {
+  description = "The type of disk to create (e.g., pd-standard, pd-balanced, pd-ssd)"
+}
+
+variable "image_name" {
+  description = "The boot disk image to use for the VM instance"
+}
